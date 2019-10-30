@@ -80,14 +80,21 @@ public class SignUpController {
 		return "";
 	}
 	
-	@RequestMapping(value = "/LoginEndMain", method = RequestMethod.GET)
-	public String LoginEndMain(Model model) {
+	
+	
+	@RequestMapping(value = "/LoginEndMain", method = RequestMethod.GET) 
+	public String LoginEndMain(HttpSession session, Model model) {
+	  
+		if(session.getAttribute("id")==null) {
+			
+			return "Main";
+		}
 		
-
 		return "LoginEndMain";
 	}
+	 
+	 
 	
-
 	@RequestMapping(value = "/LoginGo", method = RequestMethod.POST)
 	public String LoginGo(HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model) throws IOException {
 		
@@ -102,7 +109,7 @@ public class SignUpController {
 		command = new LoginCommand();
 		command.execute(model);
 		
-		
+		System.out.println(session.getAttribute("id"));
 		
 		return "";
 	}

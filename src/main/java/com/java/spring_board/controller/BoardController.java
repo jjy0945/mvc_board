@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.java.spring_board.Bcommand.BCommand;
+import com.java.spring_board.Bcommand.BContentCommand;
+import com.java.spring_board.Bcommand.BDeleteCommand;
 import com.java.spring_board.Bcommand.BListCommand;
+import com.java.spring_board.Bcommand.BUpdateCommand;
 import com.java.spring_board.Bcommand.BWriteCommand;
 
 
@@ -55,11 +59,43 @@ public class BoardController {
 		return "";
 	}
 	
+	
 	@RequestMapping(value = "/ContentView", method = RequestMethod.GET)
-	public String ContentView(Model model) {
+	public String content_view(HttpSession session, HttpServletRequest request, HttpServletRequest response, Model model){
 		
-
+		model.addAttribute("request", request);
+		command = new BContentCommand();
+		command.execute(model);
+		
 		return "ContentView";
+	}
+	
+	@RequestMapping(value = "/SessionDel", method = RequestMethod.GET)
+	public String SessionDel(HttpSession session, Model model) {
+		
+		session.invalidate();
+		
+		return "Main";
+	}
+	
+	@RequestMapping(value = "/BUpdateGo", method = RequestMethod.POST)
+	public String BUpdateGo(HttpServletRequest request, Model model){
+		
+		model.addAttribute("request", request);
+		command = new BUpdateCommand();
+		command.execute(model);
+		
+		return "redirect:Board";
+	}
+	
+	@RequestMapping(value = "/BDeleteGo", method = RequestMethod.POST)
+	public String BDeleteGo(HttpServletRequest request, Model model) {
+		
+		model.addAttribute("request", request);
+		command = new BDeleteCommand();
+		command.execute(model);
+		
+		return "redirect:Board";
 	}
 	
 }

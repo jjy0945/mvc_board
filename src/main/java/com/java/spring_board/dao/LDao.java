@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
@@ -93,7 +94,7 @@ public class LDao {
 		}
 	}
 	
-	public void Login(String MId, String MPw, HttpServletResponse response, HttpSession session) {
+	public void Login(String MId, String MPw, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		// TODO Auto-generated method stub
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -109,23 +110,25 @@ public class LDao {
 			preparedStatement.setString(2, MPw);
 			rs = preparedStatement.executeQuery();
 			if(rs.next()) {
-				response.setContentType("text/html; charset=UTF-8");
-				 
-				PrintWriter out = response.getWriter();
-				 
-				out.println("<script>alert('로그인 하셨습니다.'); location.href='/spring_board/LoginEndMain';</script>");
-				 
-				out.flush();
+				  response.setContentType("text/html; charset=UTF-8");
+				  
+				  PrintWriter out = response.getWriter();
+				  
+				  out.
+				  println("<script>alert('로그인 하셨습니다.'); location.href='/spring_board/LoginEndMain';</script>"
+				  );
+				  
+				  out.flush();
 				
 			}
 			else {
-				session.invalidate(); 
+				session.invalidate();
 				
 				response.setContentType("text/html; charset=UTF-8");
 				 
 				PrintWriter out = response.getWriter();
 				 
-				out.println("<script>alert('아이디, 비밀번호가 일치하지 않습니다.'); location.href='http://localhost:8090/spring_board/';</script>");
+				out.println("<script>alert('아이디, 비밀번호가 일치하지 않습니다.'); location.href='/spring_board/';</script>");
 				 
 				out.flush();
 				

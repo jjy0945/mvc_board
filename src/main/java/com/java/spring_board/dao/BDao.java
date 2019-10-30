@@ -98,4 +98,102 @@ public void write(String bName, String bTitle, String bContent) {
 	
 }
 
+public BDto ContentView(String bNum) {
+	// TODO Auto-generated method stub
+	
+	BDto dto = null;
+	Connection connection = null;
+	PreparedStatement preparedStatement = null;
+	ResultSet resultSet = null;
+	
+	try {
+		
+		connection = dataSource.getConnection();
+		
+		String query = "select * from MVC_BOARD where BNUM = ?";
+		preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setInt(1, Integer.parseInt(bNum));
+		resultSet = preparedStatement.executeQuery();
+		
+		if(resultSet.next()) {
+			int BNUM = resultSet.getInt("BNUM");
+			String BID = resultSet.getString("BID");
+			String BTITLE = resultSet.getString("BTITLE");
+			String BCONTENT = resultSet.getString("BCONTENT");
+			
+			dto = new BDto(BNUM, BID, BTITLE, BCONTENT);
+		}
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	} finally {
+		try {
+			if(resultSet != null) resultSet.close();
+			if(preparedStatement != null) preparedStatement.close();
+			if(connection != null) connection.close();
+		} catch (Exception e2) {
+			// TODO: handle exception
+			e2.printStackTrace();
+		}
+	}
+	return dto;
+}
+
+public void update(String bNum, String bTitle, String bContent) {
+	// TODO Auto-generated method stub
+	
+	Connection connection = null;
+	PreparedStatement preparedStatement = null;
+	
+	try {
+		connection = dataSource.getConnection();
+		
+		String query = "update MVC_BOARD set BTITLE = ?, BCONTENT = ? where BNUM = ?";
+		preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setString(1, bTitle);
+		preparedStatement.setString(2, bContent);
+		preparedStatement.setInt(3, Integer.parseInt(bNum));
+		preparedStatement.executeUpdate();
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	} finally {
+		try {
+			if(preparedStatement != null) preparedStatement.close();
+			if(connection != null) connection.close();
+		} catch (Exception e2) {
+			// TODO: handle exception
+			e2.printStackTrace();
+		}
+	}
+}
+
+public void delete(String bNum) {
+	// TODO Auto-generated method stub
+	Connection connection = null;
+	PreparedStatement preparedStatement = null;
+	try {
+		
+		connection = dataSource.getConnection();
+		String query = "delete from MVC_BOARD where BNUM = ?";
+		preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setInt(1, Integer.parseInt(bNum));
+		preparedStatement.executeUpdate();
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	} finally {
+		try {
+			if(preparedStatement != null) preparedStatement.close();
+			if(connection != null) connection.close();
+		} catch (Exception e2) {
+			// TODO: handle exception
+			e2.printStackTrace();
+		}
+	}
+}
+
 }

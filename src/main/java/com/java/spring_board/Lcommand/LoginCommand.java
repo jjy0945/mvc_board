@@ -25,7 +25,7 @@ public class LoginCommand implements LCommand {
 		String MPw = request.getParameter("MPw");
 	
 		LDao dao = new LDao();
-		dao.Login(MId, MPw, response, session);
+		dao.Login(MId, MPw, request, response, session);
 	}
 
 }

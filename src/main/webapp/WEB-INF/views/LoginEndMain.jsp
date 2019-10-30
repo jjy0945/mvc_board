@@ -14,7 +14,7 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb bg-secondary">
     <li class="breadcrumb-item"><a href="/spring_board" class="text-white">홈</a></li>
-    <li class="breadcrumb-item"><a href="/spring_board" onclick="alert('로그아웃 성공.')" class="text-white">로그아웃</a></li>
+    <li class="breadcrumb-item"><a href="/spring_board/SessionDel" onclick="alert('로그아웃 성공.');" class="text-white">로그아웃</a></li>
     <li class="breadcrumb-item"><a href="/spring_board/SignUp" class="text-white">회원가입</a></li>
     <li class="breadcrumb-item"><a href="/spring_board/SignOut" class="text-white">회원탈퇴</a></li>
     <li class="breadcrumb-item"><a href="/spring_board/Board" class="text-white">게시판</a></li>
